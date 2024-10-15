@@ -21,15 +21,17 @@ jobs:
               run: |
                   mkdir -p ~/.ssh 
                   echo "${{ secrets.SSH_PRIVATE_KEY}}" > ~/.meinPrivateKey
-                  chmod 400 ~
+                  chmod 600 ~/.meinPrivateKey
+                  ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
 
             - name: SSH Connection to EC2
-              run: ssh -i ${{ secrets.SSH_PRIVATE_KEY}} ec2-user@${{ secrets.EC2_IP }} << ENDSSH
-                       sudo yum update -y
-                       sudo yum upgrade -y
-                       sudo yum install -y nodejs
-                       sudo yum install -y serve 
-                   ENDSSH  
+              run: |
+                      ssh -i ${{ secrets.SSH_PRIVATE_KEY}} ec2-user@${{ secrets.EC2_IP }} << ENDSSH
+                          sudo yum update -y
+                          sudo yum upgrade -y
+                          sudo yum install -y nodejs
+                          sudo yum install -y serve 
+                      ENDSSH  
 
             - name: Copy build to EC2
               run: scp -i ~/.ssh/meinPrivateKey -r build ec2-user@${{secrets.EC2_IP}}:/home/ec2-user/build
