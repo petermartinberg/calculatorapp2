@@ -20,13 +20,13 @@ jobs:
             - name: Set up SSH
               run: |
                   mkdir -p ~/.ssh 
-                  echo "${{ secrets.SSH_PRIVATE_KEY}}" > ~/.meinPrivateKey
+                  echo "${{ secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/meinPrivateKey
                   chmod 600 ~/.meinPrivateKey
                   ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
 
             - name: SSH Connection to EC2
               run: |
-                      ssh -i ${{ secrets.SSH_PRIVATE_KEY}} ec2-user@${{ secrets.EC2_IP }} << ENDSSH
+                      ssh -i ${{ secrets.SSH_PRIVATE_KEY}} ec2-user@${{secrets.EC2_IP}} << ENDSSH
                           sudo yum update -y
                           sudo yum upgrade -y
                           sudo yum install -y nodejs
