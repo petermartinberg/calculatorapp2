@@ -15,7 +15,9 @@ jobs:
           docker build -t "${{ secrets.DOCKERHUB_USERNAME }}"/calculatorapp:latest .
        
       - name: Docker Login
-        run:  docker login "{{ secrets.DOCKERHUB_TOKEN }} | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        
 
       - name: Docker Push
         run: |
