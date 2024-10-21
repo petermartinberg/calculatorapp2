@@ -26,8 +26,8 @@ jobs:
       - name: Set up SSH - converted pem-key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/meinprivatkey
-          chmod 600 ~/.ssh/meinprivatkey
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/dreck.pem
+          chmod 600 ~/.ssh/dreck.pem
           ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
 
       - name: SSH Connection to EC2
