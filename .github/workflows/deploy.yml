@@ -23,11 +23,16 @@ jobs:
         run: |
           docker push "${{ secrets.DOCKERHUB_USERNAME }}"/calculatorapp:latest
 
-      - name: Set up SSH - converted pem-key
+      - name: Set up SSH
+        shell: bash
         run: |
+          echo "Creating .ssh directory..."
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/dreck.pem
+          echo "Adding private key..."
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/dreck.pem
+          echo "Setting permissions..."
           chmod 600 ~/.ssh/dreck.pem
+          echo "Scanning for known hosts..."
           ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
 
       - name: SSH Connection to EC2
