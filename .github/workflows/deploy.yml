@@ -23,7 +23,7 @@ jobs:
         run: |
           docker push "${{ secrets.DOCKERHUB_USERNAME }}"/calculatorapp:latest
 
-      - name: Set up SSH
+      - name: Set up SSH - converted pem-key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/meinprivatkey
