@@ -26,13 +26,13 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/meinPrivatkey
-          chmod 600 ~/.meinPrivatkey
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/meinprivatkey
+          chmod 600 ~/.meinprivatkey
           ssh-keyscan -H ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts 
 
       - name: SSH Connection to EC2
         run: |
-          ssh -i ~/.ssh/meinPrivateKey ec2-user@${{ secrets.EC2_IP }} << 'ENDSSH'
+          ssh -i ~/.ssh/meinprivateKey ec2-user@${{ secrets.EC2_IP }} << 'ENDSSH'
             sudo yum update -y
             sudo yum upgrade -y
             sudo yum install docker -y
